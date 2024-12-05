@@ -1,0 +1,165 @@
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vòng quay may mắn</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: red;
+        }
+        .spin_wrapper {
+            position: relative;
+            width: 300px; 
+            height: 300px; 
+        }
+
+        #circle {
+            width: 100%;
+            height: 100%;
+            transition: 5s;
+        }
+        #spiner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto; 
+            height: 80px;
+            cursor: pointer; 
+        }
+        #spiner:hover {
+            opacity: 0.8;
+        }
+        .result {
+            color: white;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        #form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scale: 0;
+            transition: 0.3s ease; 
+            pointer-events: none;
+            transform-origin: 0 0;
+        }
+        #form.active {
+            scale: 1;
+            pointer-events: all;
+        }
+        #form input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        #form button {
+            background: rgb(187, 0, 0);
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+        }
+        .overlay {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(21, 2, 2, 0);
+            top: 0;
+            left: 0;
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+        #form.active + .overlay {
+            opacity: 1;
+            pointer-events: all;
+        }
+        @keyframes zoomInOut {
+            0% {
+                scale: 0.95;
+            }
+            100% {
+                scale: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="spin_wrapper">
+        <img id="circle" src="./img/vongquay.png">
+        <img id="spiner" src="./img/nut.png"> 
+    </div>
+    <div id="form">
+        <h2 id="reward">Chúc mừng bạn đã trúng ...</h2>
+        <input placeholder="Họ và tên" />
+        <input placeholder="Email" />
+        <button>Nhận thưởng</button>
+        <div class="overlay"></div>
+    </div>
+    <script>
+        const spiner = document.getElementById("spiner");
+        const circle = document.getElementById("circle");
+        const form = document.getElementById("form");
+        const rewardTitle = document.getElementById("reward");
+        const spined = localStorage.getItem("spined");
+        const reward = localStorage.getItem("reward");
+        if (spined) {
+        spiner.style = "pointer-events: none";
+        rewardTitle.innerText = reward;
+        form.classList.add("active");
+        }
+        spiner.addEventListener("click", () => {
+            const random = Math.floor(Math.random() * 101);
+            spiner.style = "pointer-events: none"; 
+            console.log(random);
+            let reward = "Chúc may mắn";
+            if (random >= 0 && random < 5) {
+                circle.style = "rotate: 1133deg ";
+                reward = "1k";
+            } else if (random > 5 && random <= 35) {
+                circle.style = "rotate: 1200deg ";
+                reward = "-100k";
+            } else if (random > 35 && random <= 55) {
+                circle.style = "rotate: 1436deg ";
+                reward = "-200k";
+            } else if (random > 55 && random <= 70) {
+                circle.style = "rotate: 1322deg ";
+                reward = "-300k";
+            } else if (random > 70 && random <= 80) {
+                circle.style = "rotate: 1260deg";
+                reward = "-500k";
+            } else {
+                circle.style = "rotate: 1370deg";
+            }
+
+            setTimeout(() => {
+                rewardTitle.innerText = reward;
+                form.classList.add("active");
+                localStorage.setItem("spined", true);
+                localStorage.setItem("reward", reward);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
