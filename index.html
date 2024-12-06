@@ -122,13 +122,13 @@ HTML
         const circle = document.getElementById("circle");
         const form = document.getElementById("form");
         const rewardTitle = document.getElementById("reward");
-        const spined = localStorage.getItem("spined");
-        const reward = localStorage.getItem("reward");
-        if (spined) {
-        spiner.style = "pointer-events: none";
-        rewardTitle.innerText = reward;
-        form.classList.add("active");
-        }
+        //const spined = localStorage.getItem("spined");
+        //const reward = localStorage.getItem("reward");
+        //if (spined) {
+        //spiner.style = "pointer-events: none";
+        //rewardTitle.innerText = reward;
+        //form.classList.add("active");
+        //}
         spiner.addEventListener("click", () => {
             const random = Math.floor(Math.random() * 101);
             spiner.style = "pointer-events: none"; 
@@ -156,8 +156,8 @@ HTML
             setTimeout(() => {
                 rewardTitle.innerText = reward;
                 form.classList.add("active");
-                localStorage.setItem("spined", true);
-                localStorage.setItem("reward", reward);
+                //localStorage.setItem("spined", true);
+                //localStorage.setItem("reward", reward);
             }, 5000);
         });
     </script>
